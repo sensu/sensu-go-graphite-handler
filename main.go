@@ -36,7 +36,7 @@ func configureRootCommand() *cobra.Command {
 	}
 
 	cmd.Flags().StringVarP(&host, "host", "H", "localhost", "the hostname or address of the graphite server")
-	cmd.Flags().IntVarP(&port, "port", "p", 2003, "the port number to which to connect on the graphite server")
+	cmd.Flags().IntVarP(&port, "port", "p", 2013, "the port number to which to connect on the graphite server")
 	cmd.Flags().StringVarP(&prefix, "prefix", "P", "sensu", "the prefix to use in graphite for these metrics")
 
 	return cmd
