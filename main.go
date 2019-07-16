@@ -50,6 +50,10 @@ func run(cmd *cobra.Command, args []string) error {
 		return fmt.Errorf("invalid argument(s) received")
 	}
 
+	if noprefix {
+		prefix = ""
+	}
+
 	if stdin == nil {
 		stdin = os.Stdin
 	}

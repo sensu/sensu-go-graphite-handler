@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [ 0.2.1] - 2019-07-15
+
+### Changed
+- Fixed zeroing out prefix if -n --no-prefix specified
+
+## [ 0.1.0] - 2019-04-16
 ## [ 0.2.0] - 2019-07-15
 
 ### Added
