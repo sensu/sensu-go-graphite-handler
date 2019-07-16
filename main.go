@@ -13,10 +13,11 @@ import (
 )
 
 var (
-	prefix string
-	port   int
-	host   string
-	stdin  *os.File
+	prefix   string
+	port     int
+	host     string
+	stdin    *os.File
+	noprefix bool
 )
 
 func main() {
@@ -38,6 +39,7 @@ func configureRootCommand() *cobra.Command {
 	cmd.Flags().StringVarP(&host, "host", "H", "localhost", "the hostname or address of the graphite server")
 	cmd.Flags().IntVarP(&port, "port", "p", 2013, "the port number to which to connect on the graphite server")
 	cmd.Flags().StringVarP(&prefix, "prefix", "P", "sensu", "the prefix to use in graphite for these metrics")
+	cmd.Flags().BoolVarP(&noprefix, "no-prefix", "n", false, "do not include *any* prefixes, use the bare metrics.point.name")
 
 	return cmd
 }
@@ -87,16 +89,21 @@ func sendMetrics(event *types.Event) error {
 	}
 
 	for _, point := range event.Metrics.Points {
-                // Deal with special cases, such as disk checks that return file system paths as the name
-                // Graphite places these on disk using the name, so using any slashes would cause confusion and lost metrics
-		if point.Name == "/" {
-			tmp_point_name = "root"
+		if noprefix {
+			tmpvalue := fmt.Sprintf("%f", point.Value)
+			metrics = append(metrics, graphite.NewMetric(point.Name, tmpvalue, point.Timestamp))
 		} else {
-			tmp_point_name = strings.Replace(point.Name, "/", "_", -1)
+			// Deal with special cases, such as disk checks that return file system paths as the name
+			// Graphite places these on disk using the name, so using any slashes would cause confusion and lost metrics
+			if point.Name == "/" {
+				tmp_point_name = "root"
+			} else {
+				tmp_point_name = strings.Replace(point.Name, "/", "_", -1)
+			}
+			tmpname := fmt.Sprintf("%s.%s_%s", strings.Replace(event.Entity.Name, ".", "_", 1), event.Check.Name, tmp_point_name)
+			tmpvalue := fmt.Sprintf("%f", point.Value)
+			metrics = append(metrics, graphite.NewMetric(tmpname, tmpvalue, point.Timestamp))
 		}
-		tmpname := fmt.Sprintf("%s.%s_%s", strings.Replace(event.Entity.Name, ".", "_", 1), event.Check.Name, tmp_point_name)
-		tmpvalue := fmt.Sprintf("%f", point.Value)
-		metrics = append(metrics, graphite.NewMetric(tmpname, tmpvalue, point.Timestamp))
 	}
 
 	if err = Graphite.SendMetrics(metrics); err != nil {

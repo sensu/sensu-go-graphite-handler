@@ -81,6 +81,7 @@ Flags:
   -h, --help            help for sensu-graphite-handler
   -H, --host string     the hostname or address of the graphite server (default "localhost")
   -p, --port int        the port number to which to connect on the graphite server (default 2003)
+  -n, --no-prefix       do not include *any* prefixes, use the bare metrics.point.name
   -P, --prefix string   the prefix to use in graphite for these metrics (default "sensu")
 ```
 
