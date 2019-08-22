@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Changed
+- Fixed documentation to be more consistent with naming
+- Fixed default port to be 2003
+- Compile with 1.12.9
+- Switch to Go Modules
+- Fixed goreleaser to remove v in version
+
 ## [ 0.2.1] - 2019-07-15
 
 ### Changed

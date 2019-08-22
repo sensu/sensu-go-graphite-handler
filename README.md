@@ -9,12 +9,12 @@ store, instrument, and visualize the metric data from Sensu.
 
 ## Installation
 
-Download the latest version of the sensu-graphite-handler from [releases][4],
+Download the latest version of the sensu-go-graphite-handler from [bonsai][5], [releases][4],
 or create an executable script from this source.
 
-From the local path of the sensu-graphite-handler repository:
+From the local path of the sensu-go-graphite-handler repository:
 ```
-go build -o /usr/local/bin/sensu-graphite-handler main.go
+go build -o /usr/local/bin/sensu-go-graphite-handler main.go
 ```
 
 ## Configuration
@@ -31,7 +31,7 @@ Example Sensu Go handler definition:
     },
     "spec": {
         "type": "pipe",
-        "command": "sensu-graphite-handler",
+        "command": "sensu-go-graphite-handler",
         "timeout": 10,
         "filters": [
             "has_metrics"
@@ -75,17 +75,19 @@ them, and this handler will populate them into your Graphite.
 Help:
 ```
 Usage:
-  sensu-graphite-handler [flags]
+  sensu-go-graphite-handler [flags]
 
 Flags:
-  -h, --help            help for sensu-graphite-handler
-  -H, --host string     the hostname or address of the graphite server (default "localhost")
-  -p, --port int        the port number to which to connect on the graphite server (default 2003)
-  -n, --no-prefix       do not include *any* prefixes, use the bare metrics.point.name
-  -P, --prefix string   the prefix to use in graphite for these metrics (default "sensu")
+  -h, --help            help for sensu-go-graphite-handler
+  -H, --host string     The hostname or address of the graphite server (default "localhost")
+  -n, --no-prefix       Do not include *any* prefixes, use the bare metrics.point.name
+  -p, --port uint       The port number to which to connect on the graphite server (default 2003)
+  -P, --prefix string   The prefix to use in graphite for these metrics (default "sensu")
 ```
+
 
 [1]: https://github.com/sensu/sensu-go
 [2]: https://graphiteapp.org
 [3]: https://docs.sensu.io/sensu-go/latest/reference/handlers/#how-do-sensu-handlers-work
-[4]: https://github.com/nixwiz/sensu-graphite-handler/releases
+[4]: https://github.com/nixwiz/sensu-go-graphite-handler/releases
+[5]: https://bonsai.sensu.io/assets/nixwiz/sensu-go-graphite-handler

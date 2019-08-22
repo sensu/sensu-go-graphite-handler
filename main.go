@@ -1,99 +1,110 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"os"
 	"strings"
 
 	"github.com/marpaia/graphite-golang"
-	"github.com/sensu/sensu-go/types"
-	"github.com/spf13/cobra"
+	corev2 "github.com/sensu/sensu-go/api/core/v2"
+	"github.com/sensu/sensu-plugins-go-library/sensu"
+)
+
+type HandlerConfig struct {
+	sensu.PluginConfig
+	Prefix   string
+	Port     uint64
+	Host     string
+	NoPrefix bool
+}
+
+const (
+	prefix      = "prefix"
+	port        = "port"
+	host        = "host"
+	noPrefix    = "no-prefix"
+	defaultPort = 2003
 )
 
 var (
-	prefix   string
-	port     int
-	host     string
-	stdin    *os.File
-	noprefix bool
+	stdin *os.File
+
+	config = HandlerConfig{
+		PluginConfig: sensu.PluginConfig{
+			Name:     "sensu-go-graphite-handler",
+			Short:    "The Sensu Go Graphite for sending metrics to Carbon/Graphite",
+			Keyspace: "sensu.io/plugins/graphite/config",
+		},
+	}
+
+	graphiteConfigOptions = []*sensu.PluginConfigOption{
+		{
+			Path:      prefix,
+			Argument:  prefix,
+			Shorthand: "P",
+			Default:   "sensu",
+			Usage:     "The prefix to use in graphite for these metrics",
+			Value:     &config.Prefix,
+		},
+		{
+			Path:      port,
+			Argument:  port,
+			Shorthand: "p",
+			Default:   uint64(defaultPort),
+			Usage:     "The port number to which to connect on the graphite server",
+			Value:     &config.Port,
+		},
+		{
+			Path:      host,
+			Argument:  host,
+			Shorthand: "H",
+			Default:   "localhost",
+			Usage:     "The hostname or address of the graphite server",
+			Value:     &config.Host,
+		},
+		{
+			Path:      noPrefix,
+			Argument:  noPrefix,
+			Shorthand: "n",
+			Default:   false,
+			Usage:     "Do not include *any* prefixes, use the bare metrics.point.name",
+			Value:     &config.NoPrefix,
+		},
+	}
 )
 
 func main() {
-	rootCmd := configureRootCommand()
-	if err := rootCmd.Execute(); err != nil {
-		fmt.Fprintf(os.Stderr, "error: %v\n", err)
-		os.Exit(1)
-	}
+	goHandler := sensu.NewGoHandler(&config.PluginConfig, graphiteConfigOptions, checkArgs, sendMetrics)
+	goHandler.Execute()
 }
 
-func configureRootCommand() *cobra.Command {
+func checkArgs(_ *corev2.Event) error {
 
-	cmd := &cobra.Command{
-		Use:   "sensu-graphite-handler",
-		Short: "a graphite handler built for use with sensu",
-		RunE:  run,
-	}
-
-	cmd.Flags().StringVarP(&host, "host", "H", "localhost", "the hostname or address of the graphite server")
-	cmd.Flags().IntVarP(&port, "port", "p", 2013, "the port number to which to connect on the graphite server")
-	cmd.Flags().StringVarP(&prefix, "prefix", "P", "sensu", "the prefix to use in graphite for these metrics")
-	cmd.Flags().BoolVarP(&noprefix, "no-prefix", "n", false, "do not include *any* prefixes, use the bare metrics.point.name")
-
-	return cmd
-}
-
-func run(cmd *cobra.Command, args []string) error {
-	if len(args) != 0 {
-		_ = cmd.Help()
-		return fmt.Errorf("invalid argument(s) received")
-	}
-
-	if noprefix {
-		prefix = ""
+	if config.NoPrefix {
+		config.Prefix = ""
 	}
 
 	if stdin == nil {
 		stdin = os.Stdin
 	}
 
-	eventJSON, err := ioutil.ReadAll(stdin)
-	if err != nil {
-		return fmt.Errorf("failed to read stdin: %s", err)
-	}
-
-	event := &types.Event{}
-	err = json.Unmarshal(eventJSON, event)
-	if err != nil {
-		return fmt.Errorf("failed to unmarshal stdin data: %s", err)
-	}
-
-	if err = event.Validate(); err != nil {
-		return fmt.Errorf("failed to validate event: %s", err)
-	}
-
-	if !event.HasMetrics() {
-		return fmt.Errorf("event does not contain metrics")
-	}
-
-	return sendMetrics(event)
+	return nil
 }
 
-func sendMetrics(event *types.Event) error {
+func sendMetrics(event *corev2.Event) error {
 
 	var (
 		metrics        []graphite.Metric
 		tmp_point_name string
 	)
 
-	Graphite, err := graphite.NewGraphiteWithMetricPrefix(host, port, prefix)
+	Graphite, err := graphite.NewGraphiteWithMetricPrefix(config.Host, int(config.Port), config.Prefix)
 	if err != nil {
 		return err
 	}
 
 	for _, point := range event.Metrics.Points {
-		if noprefix {
+		if config.NoPrefix {
 			tmpvalue := fmt.Sprintf("%f", point.Value)
 			metrics = append(metrics, graphite.NewMetric(point.Name, tmpvalue, point.Timestamp))
 		} else {
