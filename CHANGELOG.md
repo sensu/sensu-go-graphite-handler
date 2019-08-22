@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [ 0.3.0] - 2019-08-22
+
 ### Changed
 - Fixed documentation to be more consistent with naming
 - Fixed default port to be 2003
