@@ -1,3 +1,4 @@
 dist/
 main
 sensu-graphite-handler
+sensu-go-graphite-handler
