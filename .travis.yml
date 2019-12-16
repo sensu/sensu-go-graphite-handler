@@ -1,0 +1,28 @@
+language: go
+go:
+- 1.12.x
+install:
+- curl -sfL https://install.goreleaser.com/github.com/golangci/golangci-lint.sh |
+  sh -s -- -b $(go env GOPATH)/bin v1.17.1
+script:
+- golangci-lint run --disable-all --enable=vet --enable=ineffassign --enable=goconst
+  --tests ./...
+- go test -v -race ./...
+before_script:
+- echo "REPO $TRAVIS_REPO_SLUG TAG ${TRAVIS_TAG}"
+deploy:
+- provider: script
+  script: curl -sL https://git.io/goreleaser | bash
+  skip_cleanup: true
+  on:
+    tags: true
+    condition: "$TRAVIS_OS_NAME = linux"
+after_deploy:
+- git clone https://github.com/sensu/sensu-go-bonsai-asset.git bonsai
+- bonsai/generate-sha512sum.sh
+- bonsai/github-release-upload.sh github_api_token=$GITHUB_TOKEN repo_slug="$TRAVIS_REPO_SLUG"
+  tag="${TRAVIS_TAG}" filename="dist/$(cat dist/sha512_file)"
+env:
+  global:
+  - GO111MODULE=on
+  - secure: HhkakfYeTJiF2ozhsrwdp3DnM0O6BvLzUZ7/F7nk52ecSeiH+mAE4l4QieOfzU0t7ZbYL25clmFUQoZvInjqa+G7r5oXvlCzzI94nJr50+OdemsYaA5g433/wszM1zUWIaBWnqUuxr5g0oYXHl1fcaSIWFaUvZfaIc/Jx4XFAQn74straWCJGavZFBBxdNwBshQLPBDgEPrX/oyH0L1Nu8stRJacYhRHkuqV1N90WcC0WK5uzN9TWGHTJyefQc8NU8Zbv5nNi4ETeomChv0FcUUE94qmiBBz/AJgrV6lkXTwFRCW1degnHKFLBPJ7PJT4kuQ1sWhjpKry+A4OQ9jBc4JaU5kaOdxInGRQR6QXNtv7XqdPANHts5yBOm6kWBvhjUbdWGWLUPBpD+a/5FSqH5ihEhjcrvb20rqDbMUE82Dnu4wPu3bnsZfDpd+QedHYksuY5TF1NUJ6p/RJ5fwTtXr/G3VRCMpSiRiB/MpnOzK/yh5wA8wvFmhlqtlRyac4iTork/VToJYIQ9jwYjmkPQPiQJs1Gl/nun4zdBOQiiwo5iZy/LEdAQ/Tgw9PUCDbOyMmGZfthev4aABsQ77sIuaJ5JcT/POpUnfNx6vOSjuTahFSx34LjVJVrw4PLdsKf8DUfYQLrMbjLPUgEmhZB1p2U2jx8FFBXpwTHf3wH4=

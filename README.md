@@ -1,4 +1,5 @@
 # Sensu Graphite Handler
+TravisCI: [![TravisCI Build Status](https://travis-ci.org/nixwiz/sensu-go-graphite-handler.svg?branch=master)](https://travis-ci.org/nixwiz/sensu-go-graphite-handler)
 
 The Sensu Graphite Handler is a [Sensu Event Handler][3] that sends metrics to
 the time series database [Graphite][2]. [Sensu][1] can collect metrics using
