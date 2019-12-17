@@ -1,47 +1,76 @@
-# Sensu Graphite Handler
-TravisCI: [![TravisCI Build Status](https://travis-ci.org/nixwiz/sensu-go-graphite-handler.svg?branch=master)](https://travis-ci.org/nixwiz/sensu-go-graphite-handler)
+[![Sensu Bonsai Asset](https://img.shields.io/badge/Bonsai-Download%20Me-brightgreen.svg?colorB=89C967&logo=sensu)](https://bonsai.sensu.io/assets/nixwiz/sensu-go-graphite-handler)
+[ ![Build Status](https://travis-ci.org/nixwiz/sensu-go-graphite-handler.svg?branch=master)](https://travis-ci.org/nixwiz/sensu-go-graphite-handler)
 
-The Sensu Graphite Handler is a [Sensu Event Handler][3] that sends metrics to
-the time series database [Graphite][2]. [Sensu][1] can collect metrics using
-check output metric extraction or the StatsD listener. Those collected metrics
-pass through the event pipeline, allowing Sensu to deliver the metrics to the
-configured metric event handlers. This Graphite handler will allow you to
-store, instrument, and visualize the metric data from Sensu.
+## Sensu Go Graphite Handler Plugin
 
-## Installation
+- [Overview](#overview)
+- [Files](#files)
+- [Usage examples](#usage-examples)
+- [Configuration](#configuration)
+  - [Sensu Go](#sensu-go)
+    - [Asset registration](#asset-registration)
+    - [Asset definition](#asset-definition)
+    - [Check definition](#check-definition)
+    - [Handler definition](#handler-definition)
+  - [Sensu Core](#sensu-core)
+- [Installation from source](#installation-from-source)
+- [Additional notes](#additional-notes)
+- [Contributing](#contributing)
 
-Download the latest version of the sensu-go-graphite-handler from [bonsai][5], [releases][4],
-or create an executable script from this source.
+### Overview
+
+The Sensu Graphite Handler is a [Sensu Event Handler][3] that sends metrics to the time series database [Graphite][2]. [Sensu][1] can collect metrics using check output metric extraction or the StatsD listener. Those collected metrics
+pass through the event pipeline, allowing Sensu to deliver the metrics to the configured metric event handlers. This Graphite handler will allow you to store, instrument, and visualize the metric data from Sensu.
+
+## Files
+
+N/A
+
+## Usage examples
+
+### Help
+
+```
+Usage:
+  sensu-go-graphite-handler [flags]
+
+Flags:
+  -h, --help            help for sensu-go-graphite-handler
+  -H, --host string     The hostname or address of the graphite server (default "localhost")
+  -n, --no-prefix       Do not include *any* prefixes, use the bare metrics.point.name
+  -p, --port uint       The port number to which to connect on the graphite server (default 2003)
+  -P, --prefix string   The prefix to use in graphite for these metrics (default "sensu")
+```
+
+## Configuration
+### Sensu Go
+#### Asset registration
+
+Assets are the best way to make use of this plugin. If you're not using an asset, please consider doing so! If you're using sensuctl 5.13 or later, you can use the following command to add the asset: 
+
+`sensuctl asset add nixwiz/sensu-go-graphite-handler`
+
+If you're using an earlier version of sensuctl, you can download the asset definition from [this project's Bonsai asset index page](https://bonsai.sensu.io/assets/nixwiz/sensu-go-graphite-handler) or [releases][4] or create an executable script from this source.
 
 From the local path of the sensu-go-graphite-handler repository:
 ```
 go build -o /usr/local/bin/sensu-go-graphite-handler main.go
 ```
 
-## Configuration
+#### Asset definition
 
-Example Sensu Go handler definition:
-
-```json
-{
-    "api_version": "core/v2",
-    "type": "Handler",
-    "metadata": {
-        "namespace": "default",
-        "name": "graphite"
-    },
-    "spec": {
-        "type": "pipe",
-        "command": "sensu-go-graphite-handler",
-        "timeout": 10,
-        "filters": [
-            "has_metrics"
-        ]
-    }
-}
+```yaml
+---
+type: Asset
+api_version: core/v2
+metadata:
+  name: sensu-go-graphite-handler
+spec:
+  url: https://assets.bonsai.sensu.io/793026667633e5cb3e60ba1d063eb5a38ac9cd6b/sensu-go-graphite-handler_0.3.0_linux_amd64.tar.gz
+  sha512: af738d13865fdce508fc0c4457ef7473c01639cc92da98590d842eb535db0b51bccdef5c310adf0135b5e3b3677487fe7a1b4370ae3028367bc8117c3fb1824c
 ```
 
-Example Sensu Go check definition:
+#### Check definition
 
 ```json
 {
@@ -66,29 +95,55 @@ Example Sensu Go check definition:
 }
 ```
 
-That's right, you can collect different types of metrics (ex. Influx,
-Graphite, OpenTSDB, Nagios, etc.), Sensu will extract and transform
-them, and this handler will populate them into your Graphite.
+#### Handler definition
 
-
-## Usage Examples
-
-Help:
+```json
+{
+    "api_version": "core/v2",
+    "type": "Handler",
+    "metadata": {
+        "namespace": "default",
+        "name": "graphite"
+    },
+    "spec": {
+        "type": "pipe",
+        "command": "sensu-go-graphite-handler",
+        "timeout": 10,
+        "filters": [
+            "has_metrics"
+        ]
+    }
+}
 ```
-Usage:
-  sensu-go-graphite-handler [flags]
 
-Flags:
-  -h, --help            help for sensu-go-graphite-handler
-  -H, --host string     The hostname or address of the graphite server (default "localhost")
-  -n, --no-prefix       Do not include *any* prefixes, use the bare metrics.point.name
-  -p, --port uint       The port number to which to connect on the graphite server (default 2003)
-  -P, --prefix string   The prefix to use in graphite for these metrics (default "sensu")
-```
+That's right, you can collect different types of metrics (ex. Influx, Graphite, OpenTSDB, Nagios, etc.), Sensu will extract and transform them, and this handler will populate them into your Graphite.
 
+### Sensu Core
+
+N/A
+
+## Installation from source
+
+### Sensu Go
+
+See the instructions above for [asset registration][7].
+
+### Sensu Core
+
+Install and setup plugins on [Sensu Core][6].
+
+## Additional notes
+
+N/A
+
+## Contributing
+
+N/A
 
 [1]: https://github.com/sensu/sensu-go
 [2]: https://graphiteapp.org
 [3]: https://docs.sensu.io/sensu-go/latest/reference/handlers/#how-do-sensu-handlers-work
 [4]: https://github.com/nixwiz/sensu-go-graphite-handler/releases
 [5]: https://bonsai.sensu.io/assets/nixwiz/sensu-go-graphite-handler
+[6]: https://docs.sensu.io/sensu-core/latest/installation/installing-plugins/
+[7]: #asset-registration
