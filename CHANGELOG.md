@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [ 0.3.1] - 2019-12-17
+
+### Changed
+- Reformatted README for [Plugin Style Guide](https://github.com/sensu-plugins/community/blob/master/PLUGIN_STYLEGUIDE.md)
+
 ## [ 0.3.0] - 2019-08-22
 
 ### Changed
