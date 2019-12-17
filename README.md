@@ -50,7 +50,7 @@ Assets are the best way to make use of this plugin. If you're not using an asset
 
 `sensuctl asset add nixwiz/sensu-go-graphite-handler`
 
-If you're using an earlier version of sensuctl, you can download the asset definition from [this project's Bonsai asset index page](https://bonsai.sensu.io/assets/nixwiz/sensu-go-graphite-handler) or [releases][4] or create an executable script from this source.
+If you're using an earlier version of sensuctl, you can download the asset definition from [this project's Bonsai asset index page][5] or [releases][4] or create an executable script from this source.
 
 From the local path of the sensu-go-graphite-handler repository:
 ```
