@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Changed
+- Fixed goreleaser deprecated archive to use archives
+
 ## [ 0.3.1] - 2019-12-17
 
 ### Changed
