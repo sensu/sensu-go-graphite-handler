@@ -6,8 +6,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [ 0.4.0] - 2020-02-07
+
 ### Changed
 - Fixed goreleaser deprecated archive to use archives
+- Converted from Travis CI to GitHub Actions
 
 ### Added
 - Added classic parity support for `--prefix-source`.
