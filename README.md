@@ -33,13 +33,20 @@ N/A
 ```
 Usage:
   sensu-go-graphite-handler [flags]
+  sensu-go-graphite-handler [command]
+
+Available Commands:
+  help        Help about any command
+  version     Print the version number of this plugin
 
 Flags:
-  -h, --help            help for sensu-go-graphite-handler
-  -H, --host string     The hostname or address of the graphite server (default "localhost")
-  -n, --no-prefix       Do not include *any* prefixes, use the bare metrics.point.name
-  -p, --port uint       The port number to which to connect on the graphite server (default 2003)
-  -P, --prefix string   The prefix to use in graphite for these metrics (default "sensu")
+  -a, --annotation-prefix string   the string to be prepended to each annotation in graphite (default "sensu.annotations")
+  -h, --help                       help for sensu-go-graphite-handler
+  -H, --host string                the hostname or address of the graphite server (default "127.0.0.1")
+  -n, --no-prefix                  unsets the default prefix value, use the bare metrics.point.name
+  -p, --port uint                  the port number to which to connect on the graphite server (default 2003)
+  -P, --prefix string              the string to be prepended to each metric in graphite (default "sensu")
+  -s, --prefix-source              if true, prepends the sensu entity name (source) as a string to each metric in graphite
 ```
 
 ## Configuration
