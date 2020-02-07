@@ -54,7 +54,7 @@ var (
 			Argument:  prefixSource,
 			Shorthand: "s",
 			Default:   false,
-			Usage:     "If true, prepends the sensu entity name (source) as a string to each metric in graphite",
+			Usage:     "if true, prepends the sensu entity name (source) as a string to each metric in graphite",
 			Value:     &config.PrefixSource,
 		},
 		{
@@ -62,7 +62,7 @@ var (
 			Argument:  prefix,
 			Shorthand: "P",
 			Default:   defaultPrefix,
-			Usage:     "The string to be prepended to each metric in graphite",
+			Usage:     "the string to be prepended to each metric in graphite",
 			Value:     &config.Prefix,
 		},
 		{
@@ -70,7 +70,7 @@ var (
 			Argument:  annotationPrefix,
 			Shorthand: "a",
 			Default:   defaultAnnotationPrefix,
-			Usage:     "The string to be prepended to each annotation in graphite",
+			Usage:     "the string to be prepended to each annotation in graphite",
 			Value:     &config.AnnotationPrefix,
 		},
 		{
@@ -78,7 +78,7 @@ var (
 			Argument:  port,
 			Shorthand: "p",
 			Default:   uint64(defaultPort),
-			Usage:     "The port number to which to connect on the graphite server",
+			Usage:     "the port number to which to connect on the graphite server",
 			Value:     &config.Port,
 		},
 		{
@@ -86,7 +86,7 @@ var (
 			Argument:  host,
 			Shorthand: "H",
 			Default:   defaultHost,
-			Usage:     "The hostname or address of the graphite server",
+			Usage:     "the hostname or address of the graphite server",
 			Value:     &config.Host,
 		},
 		{
@@ -94,7 +94,7 @@ var (
 			Argument:  noPrefix,
 			Shorthand: "n",
 			Default:   false,
-			Usage:     "Unsets the default prefix value, use the bare metrics.point.name",
+			Usage:     "unsets the default prefix value, use the bare metrics.point.name",
 			Value:     &config.NoPrefix,
 		},
 	}
