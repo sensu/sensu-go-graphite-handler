@@ -76,7 +76,7 @@ func TestMain(t *testing.T) {
 	require.NoError(t, err)
 	config.Port = uint64(port)
 	oldArgs := os.Args
-	os.Args = []string{"sensu-go-graphite-handler", "--host", host, "--port", string(port)}
+	os.Args = []string{"sensu-go-graphite-handler", "--host", url.Hostname(), "--port", url.Port()}
 	defer func() { os.Args = oldArgs }()
 
 	main()
