@@ -9,6 +9,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Changed
 - Fixed goreleaser deprecated archive to use archives
 
+### Added
+- Added classic parity support for `--prefix-source`.
+- Added classic parity support for `--annotation-prefix`.
+- Added classic parity support for annotation metrics of check attributes.
+
+### Fixed
+- Fixed a panic that could arise from statsd metrics.
+- Implemented some go styling best practices.
+
 ## [ 0.3.1] - 2019-12-17
 
 ### Changed
