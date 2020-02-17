@@ -101,11 +101,11 @@ var (
 )
 
 func main() {
-	goHandler := sensu.NewGoHandler(&config.PluginConfig, graphiteConfigOptions, checkArgs, sendMetrics)
+	goHandler := sensu.NewGoHandler(&config.PluginConfig, graphiteConfigOptions, CheckArgs, SendMetrics)
 	goHandler.Execute()
 }
 
-func checkArgs(event *corev2.Event) error {
+func CheckArgs(event *corev2.Event) error {
 	if !event.HasMetrics() {
 		return fmt.Errorf("event does not contain metrics")
 	}
@@ -130,7 +130,7 @@ func checkArgs(event *corev2.Event) error {
 	return nil
 }
 
-func sendMetrics(event *corev2.Event) error {
+func SendMetrics(event *corev2.Event) error {
 	var (
 		metrics      []graphite.Metric
 		tmpPointName string
