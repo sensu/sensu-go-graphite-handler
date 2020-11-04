@@ -5,10 +5,7 @@ builds:
   binary: bin/{{ .ProjectName }}
   goos:
     - darwin
-    - freebsd
     - linux
-    - netbsd
-    - solaris
     - windows
   goarch:
     - amd64
@@ -19,9 +16,16 @@ builds:
     - 5
     - 6
     - 7
-  ignore:
-    - goos: freebsd
-      goarch: arm
+  targets:
+    - darwin_amd64
+    - linux_386
+    - linux_amd64
+    - linux_arm_5
+    - linux_arm_6
+    - linux_arm_7
+    - linux_arm64
+    - windows_386
+    - windows_amd64
 
 checksum:
   name_template: "{{ .ProjectName }}_{{ .Version }}_sha512-checksums.txt"

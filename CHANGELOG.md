@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [ 0.5.1] - 2020-11-04
+
+### Changed
+- Updated build targets in goreleaser and bonsai
+
 ## [ 0.5.0] - 2020-11-04
 
 ### Changed
