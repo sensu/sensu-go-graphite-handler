@@ -138,7 +138,7 @@ func SendMetrics(event *corev2.Event) error {
 		check        string
 	)
 
-	entity := strings.Replace(event.Entity.Name, ".", "_", 1)
+	entity := strings.Replace(event.Entity.Name, ".", "_", -1)
 	g, err := graphite.NewGraphite(config.Host, int(config.Port))
 	if err != nil {
 		return err
