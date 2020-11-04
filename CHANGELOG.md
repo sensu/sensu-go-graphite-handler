@@ -8,7 +8,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Changed
 - Improved test coverage
-- Updated SDK to v0.10.1
+- Updated SDK to v0.11.0
+- Fix entity name dot replacement to all dots
 
 ## [ 0.4.0] - 2020-02-07
 
