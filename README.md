@@ -1,6 +1,6 @@
-[![Sensu Bonsai Asset](https://img.shields.io/badge/Bonsai-Download%20Me-brightgreen.svg?colorB=89C967&logo=sensu)](https://bonsai.sensu.io/assets/nixwiz/sensu-go-graphite-handler)
-![Go Test](https://github.com/nixwiz/sensu-go-graphite-handler/workflows/Go%20Test/badge.svg)
-![goreleaser](https://github.com/nixwiz/sensu-go-graphite-handler/workflows/goreleaser/badge.svg)
+[![Sensu Bonsai Asset](https://img.shields.io/badge/Bonsai-Download%20Me-brightgreen.svg?colorB=89C967&logo=sensu)](https://bonsai.sensu.io/assets/sensu/sensu-go-graphite-handler)
+![Go Test](https://github.com/sensu/sensu-go-graphite-handler/workflows/Go%20Test/badge.svg)
+![goreleaser](https://github.com/sensu/sensu-go-graphite-handler/workflows/goreleaser/badge.svg)
 
 ## Sensu Go Graphite Handler Plugin
 
@@ -56,7 +56,7 @@ Flags:
 
 Assets are the best way to make use of this plugin. If you're not using an asset, please consider doing so! If you're using sensuctl 5.13 or later, you can use the following command to add the asset: 
 
-`sensuctl asset add nixwiz/sensu-go-graphite-handler`
+`sensuctl asset add sensu/sensu-go-graphite-handler`
 
 If you're using an earlier version of sensuctl, you can download the asset definition from [this project's Bonsai asset index page][5] or [releases][4] or create an executable script from this source.
 
@@ -151,7 +151,7 @@ N/A
 [1]: https://github.com/sensu/sensu-go
 [2]: https://graphiteapp.org
 [3]: https://docs.sensu.io/sensu-go/latest/reference/handlers/#how-do-sensu-handlers-work
-[4]: https://github.com/nixwiz/sensu-go-graphite-handler/releases
-[5]: https://bonsai.sensu.io/assets/nixwiz/sensu-go-graphite-handler
+[4]: https://github.com/sensu/sensu-go-graphite-handler/releases
+[5]: https://bonsai.sensu.io/assets/sensu/sensu-go-graphite-handler
 [6]: https://docs.sensu.io/sensu-core/latest/installation/installing-plugins/
 [7]: #asset-registration

@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [ 0.5.2] - 2021-04-13
+
+### Changed
+- Moved to sensu github org and updating the readme.
+
 ## [ 0.5.1] - 2020-11-04
 
 ### Changed

@@ -1,4 +1,4 @@
-module github.com/nixwiz/sensu-go-graphite-handler
+module github.com/sensu/sensu-go-graphite-handler
 
 go 1.12
 
